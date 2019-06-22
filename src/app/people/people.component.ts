@@ -18,12 +18,8 @@ export class PeopleComponent implements OnInit {
     this.httpClient = httpClient;
   }
 
-  public ngOnInit(): void {
-    this.getPage('https://swapi.co/api/people/');
-  }
-
-  public getPage(url: string) {
-    const request = this.httpClient.get(url);
+  public ngOnInit() {
+    const request = this.httpClient.get('https://swapi.co/api/people/');
 
     request.subscribe((response: People) => {
       this.people = response.results;
@@ -33,10 +29,8 @@ export class PeopleComponent implements OnInit {
   }
 
   public previousPage(): void {
-    this.getPage(this.previous);
   }
 
   public nextPage(): void {
-    this.getPage(this.next);
   }
 }
