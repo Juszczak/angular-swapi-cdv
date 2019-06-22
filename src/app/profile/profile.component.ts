@@ -34,7 +34,6 @@ export class ProfileComponent implements OnInit {
       const person: Person = this.appService.getPerson(id);
       
       if (!person) {
-        console.log('no person');
         const request = this.httpClient.get(this.apiUrl);
 
         request.subscribe((response: Person) => {

@@ -28,7 +28,6 @@ export class AppService {
   }
 
   public getPerson(id: string): Person {
-    console.log(this.people.get(id));
     return this.people.get(id); // -> Person
   }
 }
