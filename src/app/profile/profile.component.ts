@@ -3,6 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Person } from '../people/people';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'app-profile',
@@ -15,10 +16,12 @@ export class ProfileComponent implements OnInit {
 
   private route: ActivatedRoute;
   private httpClient: HttpClient;
+  private appService: AppService;
 
-  constructor(activatedRoute: ActivatedRoute, httpClient: HttpClient) {
+  constructor(activatedRoute: ActivatedRoute, httpClient: HttpClient, appService: AppService) {
     this.route = activatedRoute;
     this.httpClient = httpClient;
+    this.appService = appService;
   }
 
   public ngOnInit(): void {
@@ -27,11 +30,19 @@ export class ProfileComponent implements OnInit {
     params.subscribe((params: Params) => {
       const id: string = params.id;
       this.apiUrl = atob(id);       // btoa <-> atob
-      const request = this.httpClient.get(this.apiUrl);
 
-      request.subscribe((response: Person) => {
-        this.person = response;
-      });
+      const person: Person = this.appService.getPerson(id);
+      
+      if (!person) {
+        console.log('no person');
+        const request = this.httpClient.get(this.apiUrl);
+
+        request.subscribe((response: Person) => {
+          this.person = response;
+        });
+      } else {
+        this.person = person;
+      }
     });
   }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { People, Person } from './people';
 import { Observable } from 'rxjs';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'app-people',
@@ -14,9 +15,11 @@ export class PeopleComponent implements OnInit {
   public previous: string;
 
   private httpClient: HttpClient;
+  private appService: AppService;
 
-  constructor(httpClient: HttpClient) {
+  constructor(httpClient: HttpClient, appService: AppService) {
     this.httpClient = httpClient;
+    this.appService = appService;
   }
 
   public ngOnInit() {
@@ -36,7 +39,7 @@ export class PeopleComponent implements OnInit {
   }
 
   private getPage(url: string): void {
-    const request: Observable<People> = this.httpClient.get<People>(url);
+    const request: Observable<People> = this.appService.getPage(url);
 
     request.subscribe((response: People) => {
       this.people = response.results;
