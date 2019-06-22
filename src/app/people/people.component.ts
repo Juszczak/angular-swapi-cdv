@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { People, Person } from './people';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-people',
@@ -19,18 +20,28 @@ export class PeopleComponent implements OnInit {
   }
 
   public ngOnInit() {
-    const request = this.httpClient.get('https://swapi.co/api/people/');
+    this.getPage('https://swapi.co/api/people/');
+  }
+
+  public previousPage(): void {
+    this.getPage(this.previous);
+  }
+
+  public nextPage(): void {
+    this.getPage(this.next);
+  }
+
+  public generateProfileLink(person: Person): string {
+    return `/profile/${btoa(person.url)}`;
+  }
+
+  private getPage(url: string): void {
+    const request: Observable<People> = this.httpClient.get<People>(url);
 
     request.subscribe((response: People) => {
       this.people = response.results;
       this.next = response.next;
       this.previous = response.previous;
-    })
-  }
-
-  public previousPage(): void {
-  }
-
-  public nextPage(): void {
+    });
   }
 }
