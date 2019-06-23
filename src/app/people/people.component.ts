@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { People, Person } from './people';
 import { Observable } from 'rxjs';
 import { AppService } from '../app.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-people',
@@ -15,15 +15,18 @@ export class PeopleComponent implements OnInit {
   public next: string;
   public previous: string;
   public pages: number[];
+  public page: number;
 
   private httpClient: HttpClient;
   private appService: AppService;
   private activateRoute: ActivatedRoute;
+  private router: Router;
 
-  constructor(httpClient: HttpClient, appService: AppService, activatedRoute: ActivatedRoute) {
+  constructor(httpClient: HttpClient, appService: AppService, activatedRoute: ActivatedRoute, router: Router) {
     this.httpClient = httpClient;
     this.appService = appService;
     this.activateRoute = activatedRoute;
+    this.router = router;
   }
 
   public ngOnInit() {
@@ -32,8 +35,10 @@ export class PeopleComponent implements OnInit {
     params.subscribe((params: Params) => {
       const page: string = params.page;
       if (page) {
+        this.page = parseInt(page, 10);
         this.getPageByIndex(page);
       } else {
+        this.page = 1;
         this.getPage('https://swapi.co/api/people/');
       }
     });
@@ -41,10 +46,14 @@ export class PeopleComponent implements OnInit {
   }
 
   public previousPage(): void {
+    this.page--;
+    this.router.navigateByUrl(`/people/${this.page}`);
     this.getPage(this.previous);
   }
 
   public nextPage(): void {
+    this.page++;
+    this.router.navigateByUrl(`/people/${this.page}`);
     this.getPage(this.next);
   }
 
@@ -73,6 +82,13 @@ export class PeopleComponent implements OnInit {
 
   public getPageByIndex(page: number | string): void {
     const url: string = `https://swapi.co/api/people/?page=${page}`;
+
+    if (typeof page === 'string') {
+      this.page = parseInt(page, 10);
+    } else {
+      this.page = page;
+    }
+    this.router.navigateByUrl(`/people/${this.page}`);
     this.getPage(url);
   }
 }
