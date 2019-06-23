@@ -14,7 +14,7 @@
     <h3>Films</h3>
 			<div *ngIf="person">
         <div *ngFor="let film$ of person.filmsRequests">
-          {{ (film$ | async).title }}
+          {{ (film$ | async)?.title }}
         </div>
 			</div>
   </mat-card-content>

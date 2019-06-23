@@ -14,9 +14,9 @@ export class AppService {
   }
 
   public getPage(url: string): Observable<People> {
-    const request: Observable<People> = this.httpClient.get<People>(url);
+    const request$: Observable<People> = this.httpClient.get<People>(url);
 
-    request.subscribe((response: People) => {
+    request$.subscribe((response: People) => {
       const people: Person[] = response.results;
       people.forEach((person: Person) => {
         const id: string = btoa(person.url);
@@ -24,7 +24,7 @@ export class AppService {
       });
     });
 
-    return request;
+    return request$;
   }
 
   public getPerson(id: string): PersonWithFilmsReqests {
