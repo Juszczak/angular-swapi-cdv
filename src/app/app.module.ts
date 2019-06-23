@@ -13,6 +13,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatListModule} from '@angular/material/list';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatCardModule} from '@angular/material/card';
+
 
 const routes: Routes = [
   {
@@ -47,6 +49,7 @@ const routes: Routes = [
     MatProgressSpinnerModule,
     MatListModule,
     MatToolbarModule,
+    MatCardModule,
   ],
   declarations: [AppComponent, PeopleComponent, ProfileComponent
   ],

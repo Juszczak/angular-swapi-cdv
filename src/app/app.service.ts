@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Person, People } from './people/people';
+import { Person, People, PersonWithFilmsReqests } from './people/people';
 import { Observable } from 'rxjs';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class AppService {
   public people: Map<string, Person>;
   private httpClient: HttpClient;
@@ -27,7 +27,16 @@ export class AppService {
     return request;
   }
 
-  public getPerson(id: string): Person {
-    return this.people.get(id); // -> Person
+  public getPerson(id: string): PersonWithFilmsReqests {
+    const person: Person = this.people.get(id);
+
+    const requests = person.films.map(
+      (filmUrl: string) => this.httpClient.get(filmUrl)
+    );
+
+    let personWithReq: PersonWithFilmsReqests = person as PersonWithFilmsReqests;
+    personWithReq.filmsRequests = requests;
+
+    return personWithReq;
   }
 }
