@@ -13,6 +13,7 @@ export class PeopleComponent implements OnInit {
   public people: Person[];
   public next: string;
   public previous: string;
+  public pages: number[];
 
   private httpClient: HttpClient;
   private appService: AppService;
@@ -46,6 +47,14 @@ export class PeopleComponent implements OnInit {
       this.people = response.results;
       this.next = response.next;
       this.previous = response.previous;
+
+      const pages: number = response.count / 10;
+      const pagesRound: number = Math.ceil(pages);
+      
+      this.pages = [];
+      for (let i = 0; i < pagesRound; i++) {
+        this.pages.push(i);
+      }
     });
   }
 }
