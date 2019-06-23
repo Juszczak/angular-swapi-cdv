@@ -24,8 +24,11 @@
     previous
   </button>
 
-  <!-- <button *ngFor="">
-  <button> -->
+  <button *ngFor="let page of pages"
+          mat-button
+          (click)="getPageByIndex(page)">
+    {{ page }}
+  </button>
 
   <button (click)="nextPage()"
           mat-raised-button

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { People, Person } from './people';
 import { Observable } from 'rxjs';
 import { AppService } from '../app.service';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-people',
@@ -17,14 +18,26 @@ export class PeopleComponent implements OnInit {
 
   private httpClient: HttpClient;
   private appService: AppService;
+  private activateRoute: ActivatedRoute;
 
-  constructor(httpClient: HttpClient, appService: AppService) {
+  constructor(httpClient: HttpClient, appService: AppService, activatedRoute: ActivatedRoute) {
     this.httpClient = httpClient;
     this.appService = appService;
+    this.activateRoute = activatedRoute;
   }
 
   public ngOnInit() {
-    this.getPage('https://swapi.co/api/people/');
+    const params: Observable<Params> = this.activateRoute.params;
+
+    params.subscribe((params: Params) => {
+      const page: string = params.page;
+      if (page) {
+        this.getPageByIndex(page);
+      } else {
+        this.getPage('https://swapi.co/api/people/');
+      }
+    });
+
   }
 
   public previousPage(): void {
@@ -53,8 +66,13 @@ export class PeopleComponent implements OnInit {
       
       this.pages = [];
       for (let i = 0; i < pagesRound; i++) {
-        this.pages.push(i);
+        this.pages.push(i + 1);
       }
     });
+  }
+
+  public getPageByIndex(page: number | string): void {
+    const url: string = `https://swapi.co/api/people/?page=${page}`;
+    this.getPage(url);
   }
 }

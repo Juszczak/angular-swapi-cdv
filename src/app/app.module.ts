@@ -15,9 +15,14 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 const routes: Routes = [
   {
+    path: 'people/:page',
+    component: PeopleComponent
+  },
+  {
     path: 'people',
     component: PeopleComponent
-  }, {
+  },
+  {
     path: 'profile/:id',
     component: ProfileComponent
   },
