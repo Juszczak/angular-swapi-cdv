@@ -39,6 +39,7 @@ export class PeopleComponent implements OnInit {
   }
 
   private getPage(url: string): void {
+    this.people = [];
     const request: Observable<People> = this.appService.getPage(url);
 
     request.subscribe((response: People) => {

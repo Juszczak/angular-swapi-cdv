@@ -7,6 +7,11 @@ import { AppComponent } from './app.component';
 import { PeopleComponent } from './people/people.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AppService } from './app.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatButtonModule, MatCheckboxModule} from '@angular/material';
+import {MatIconModule} from '@angular/material/icon';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 
 const routes: Routes = [
   {
@@ -15,7 +20,7 @@ const routes: Routes = [
   }, {
     path: 'profile/:id',
     component: ProfileComponent
-  }, 
+  },
   {
     path: '',
     redirectTo: 'people',
@@ -24,9 +29,20 @@ const routes: Routes = [
 ]
 
 @NgModule({
-  imports:      [ BrowserModule, FormsModule, HttpClientModule, RouterModule.forRoot(routes) ],
-  declarations: [ AppComponent, PeopleComponent, ProfileComponent ],
-  bootstrap:    [ AppComponent ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    HttpClientModule,
+    RouterModule.forRoot(routes),
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatIconModule,
+    MatProgressSpinnerModule
+  ],
+  declarations: [AppComponent, PeopleComponent, ProfileComponent
+  ],
+  bootstrap: [AppComponent],
   providers: [AppService]
 })
 export class AppModule { }
