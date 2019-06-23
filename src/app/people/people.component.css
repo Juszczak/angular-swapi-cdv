@@ -1,6 +1,14 @@
 .list {
-  height: 300px;
   position: relative;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.previous-button {
+  min-width: 120px;
 }
 
 .next-button {
@@ -9,4 +17,12 @@
 
 .active {
   border: 1px solid;
+}
+
+.spinner {
+  position: absolute;
+  top: 200px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
 }

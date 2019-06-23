@@ -1,22 +1,8 @@
-<div class="list">
-	<ul>
-		<li *ngFor="let person of people">
-			<a [routerLink]="generateProfileLink(person)">
-				{{ person.name }}
-			</a>
-		</li>
-	</ul>
-
-	<mat-spinner *ngIf="people.length == 0"
-   color="primary">
-  </mat-spinner>
-
-</div>
-
-<div>
+<mat-toolbar color="primary"
+class="toolbar">
 	<button (click)="previousPage()"
           mat-raised-button
-          color="primary"
+          color="accent"
           class="previous-button button"
           [disabled]="!previous"
           >
@@ -33,11 +19,31 @@
 
   <button (click)="nextPage()"
           mat-raised-button
-          color="primary"
+          color="accent"
           class="next-button button"
           [disabled]="!next"
   >
   next
   <mat-icon>keyboard_arrow_right</mat-icon>
   </button>
+</mat-toolbar>
+
+<div class="list">
+	<mat-list>
+		<mat-list-item *ngFor="let person of people">
+      <mat-icon mat-list-icon>folder</mat-icon>
+      <h4 mat-line>{{ person.name }}
+			  <a mat-button 
+           [routerLink]="generateProfileLink(person)">
+				show profile
+			  </a>
+      </h4>
+		</mat-list-item>
+	</mat-list>
+
+	<mat-spinner *ngIf="people.length == 0"
+   color="primary"
+   class="spinner">
+  </mat-spinner>
+
 </div>
